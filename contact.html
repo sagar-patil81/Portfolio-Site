@@ -17,7 +17,7 @@
 
 <section class="section">
   <h2>Contact Me</h2>
-  <form class="contact-form" id="contact-form"action="something" method="post" enctype="text/plain">
+  <form class="contact-form" id="contact-form">
     <input type="text" name="name" placeholder="Your Name" required>
     <input type="email" name="email" placeholder="Your Email" required>
     <textarea name="message" placeholder="Your Message" required></textarea>
@@ -25,25 +25,30 @@
   </form>
 </section>
 
-
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <script>
-(function(){
-  emailjs.init("fC9qLKtC0LmqbbCIZ"); // 🔴 replace this
-})();
+document.addEventListener("DOMContentLoaded", function () {
 
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
+  emailjs.init("fC9qLKtC0LmqbbCIZ"); // your public key
 
-  emailjs.sendForm("service_nqgh8fs", "template_sndez3g", this)
-    .then(function() {
-      alert("Message sent successfully!");
-      document.getElementById("contact-form").reset();
-    }, function(error) {
-      alert("Failed to send message");
-      console.log(error);
-    });
+  const form = document.getElementById("contact-form");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    emailjs.sendForm("service_nqgh8fs", "template_sndez3g", form)
+      .then(function () {
+        alert("✅ Message sent successfully!");
+        form.reset();
+      })
+      .catch(function (error) {
+        alert("❌ Failed to send message");
+        console.log("ERROR:", error);
+      });
+
+  });
+
 });
 </script>
 </body>
