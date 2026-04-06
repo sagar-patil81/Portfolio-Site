@@ -26,30 +26,24 @@
 </section>
 
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
 <script>
-document.getElementById("contact-form").addEventListener("submit", async function(e) {
-  e.preventDefault(); // stop page refresh
+(function(){
+  emailjs.init("fC9qLKtC0LmqbbCIZ"); // 🔴 replace this
+})();
 
-  const formData = {
-    name: this.name.value,
-    email: this.email.value,
-    message: this.message.value
-  };
+document.getElementById("contact-form").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-  try {
-    const response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
+  emailjs.sendForm("service_nqgh8fs", "template_sndez3g", this)
+    .then(function() {
+      alert("Message sent successfully!");
+      document.getElementById("contact-form").reset();
+    }, function(error) {
+      alert("Failed to send message");
+      console.log(error);
     });
-
-    const result = await response.text();
-    alert(result);
-  } catch (error) {
-    alert("Error sending message");
-  }
 });
 </script>
 </body>
